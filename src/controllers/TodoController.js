@@ -21,13 +21,11 @@ class TodoController {
 
       if (method === 'OPTIONS') {
         response.writeHead(204, headers)
-        response.end()
-        return
+        return response.end(todos)
       }
       if (['GET'].indexOf(method) > -1) {
         response.writeHead(200, headers)
-        response.end(todos)
-        return
+        return response.end(todos)
       }
       response.writeHead(405, headers)
       response.end(`${method} is not allowed for the request.`)
