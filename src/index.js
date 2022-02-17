@@ -37,7 +37,7 @@ server.on("request", function (request, response) {
 	case "DELETE":
 		response.writeHead(200, {
 			"Content-Type":"application/json",
-			"Access-Control-Allow-Origin":"*", // REQUIRED CORS HEADER
+			"Access-Control-Allow-Origin":"http://localhost:3000", // REQUIRED CORS HEADER
 			"Access-Control-Allow-Headers":"Origin, X-Requested-With, Content-Type, Accept" // REQUIRED CORS HEADER
 		});
 		response.end(JSON.stringify({dummy:"dummy"}));
