@@ -11,22 +11,22 @@ class TodoController {
     try {
       const todos = JSON.stringify(await this.todoRepository.findAll())
       const { method } = request
-      const headers = [
-        { key: 'Access-Control-Allow-Origin', value: '*' },
-        { key: 'Access-Control-Allow-Methods', vale: 'OPTIONS, POST, GET' },
-        { key: 'Access-Control-Allow-Headers', value: 'X-CSRF-token, X-Reques' },
-        { key: 'Access-Control-Allow-Credentials', value: true }
-      ]
+      const headers = { 'Access-Control-Allow-Origin': '*' }
+      //   ,
+      //   { key: 'Access-Control-Allow-Methods', vale: 'OPTIONS, POST, GET' },
+      //   { key: 'Access-Control-Allow-Headers', value: 'X-CSRF-token, X-Reques' },
+      //   { key: 'Access-Control-Allow-Credentials', value: true }
+      // ]
 
       if (method === 'OPTIONS') {
-        response.writeHead(204, ...headers)
+        response.writeHead(204, headers)
         return response.end(todos)
       }
       if (['GET'].indexOf(method) > -1) {
-        response.writeHead(200, ...headers)
+        response.writeHead(200, headers)
         return response.end(todos)
       }
-      response.writeHead(405, ...headers)
+      response.writeHead(405, headers)
       response.end(`${method} is not allowed for the request.`)
       response.write(todos)
       return response.end()
