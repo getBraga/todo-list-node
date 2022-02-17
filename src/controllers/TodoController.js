@@ -12,7 +12,7 @@ class TodoController {
       const todos = JSON.stringify(await this.todoRepository.findAll())
       const { method } = request
       const headers = {
-        'Access-Control-Allow-Origin': 'http://localhost:3000',
+        'Access-Control-Allow-Origin': 'http://localhost:3000/',
         'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
         'Access-Control-Allow-Headers': 'X-Requested-With,content-type',
         'Access-Control-Allow-Credentials': true,
