@@ -5,7 +5,7 @@ const { routes } = require('./../src/routes/Todo')
 const PORT = process.env.PORT || 4000
 
 const handler = (request, response) => {
- 
+ response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000")
   const { url, method } = request
   let routeKey = `${method.toLowerCase()}:${url}`
   const [,, id] = routeKey.split('/')
