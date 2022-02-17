@@ -40,7 +40,7 @@ server.on("request", function (request, response) {
 			"Access-Control-Allow-Origin":"http://localhost:3000", // REQUIRED CORS HEADER
 			"Access-Control-Allow-Headers":"Origin, X-Requested-With, Content-Type, Accept" // REQUIRED CORS HEADER
 		});
-		response.end(JSON.stringify({dummy:"dummy"}));
+		response.end();
 		break;
 	case "OPTIONS": // THE CLIENT OCCASIONALLY - NOT ALWAYS - CHECKS THIS
 		response.writeHead(200, {
