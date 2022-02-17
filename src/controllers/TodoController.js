@@ -9,7 +9,6 @@ class TodoController {
 
   async index (request, response) {
     try {
-      response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000")
       const todos = JSON.stringify(await this.todoRepository.findAll())
       response.write(todos)
       return response.end()
