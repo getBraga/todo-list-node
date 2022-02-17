@@ -11,14 +11,12 @@ class TodoController {
     try {
       const todos = JSON.stringify(await this.todoRepository.findAll())
       const { method } = request
-      const headers = {
-        'Access-Control-Allow-Origin': 'http://localhost:3000/',
-        'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
-        'Access-Control-Allow-Headers': 'X-Requested-With,content-type',
-        'Access-Control-Allow-Credentials': true,
-        'Access-Control-Max-Age': 2592000// 30 days
-        /** add other headers as per requirement */
-      }
+      const headers = [
+        { key: 'Access-Control-Allow-Origin', value: '*' },
+        { key: 'Access-Control-Allow-Methods', vale: 'OPTIONS, POST, GET' },
+        { key: 'Access-Control-Allow-Headers', value: 'X-CSRF-token, X-Reques' },
+        { key: 'Access-Control-Allow-Credentials', value: true }
+      ]
 
       if (method === 'OPTIONS') {
         response.writeHead(204, headers)
