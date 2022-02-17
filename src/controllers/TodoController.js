@@ -14,18 +14,16 @@ class TodoController {
       const headers = {
         'Access-Control-Allow-Origin': 'http://localhost:3000',
         'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
-        'Access-Control-Max-Age': 2592000// 30 days
-        /** add other headers as per requirement */
       }
       if (method === 'OPTIONS') {
         response.writeHead(204, headers)
-        response.end()
-        return
+         return response.end(todos)
+        
       }
       if (['GET'].indexOf(method) > -1) {
         response.writeHead(200, headers)
-        response.end(todos)
-        return
+        return response.end(todos)
+        
       }
       response.writeHead(405, headers)
       response.end(`${method} is not allowed for the request.`)
