@@ -6,8 +6,6 @@ const PORT = process.env.PORT || 4000
 
 const handler = (request, response) => {
  response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000")
- response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
- response.header('Access-Control-Allow-Headers', 'Content-Type, X-Custom-Header')
   const { url, method } = request
   let routeKey = `${method.toLowerCase()}:${url}`
   const [,, id] = routeKey.split('/')
