@@ -10,6 +10,25 @@ class TodoController {
   async index (request, response) {
     try {
       const todos = JSON.stringify(await this.todoRepository.findAll())
+      const { method } = request
+      const headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
+        'Access-Control-Max-Age': 2592000// 30 days
+        /** add other headers as per requirement */
+      }
+      if (method === 'OPTIONS') {
+        response.writeHead(204, headers)
+        response.end()
+        return
+      }
+      if (['GET'].indexOf(method) > -1) {
+        response.writeHead(200, headers)
+        response.end(todos)
+        return
+      }
+      response.writeHead(405, headers)
+      response.end(`${method} is not allowed for the request.`)
       response.write(todos)
       return response.end()
     } catch (error) {
