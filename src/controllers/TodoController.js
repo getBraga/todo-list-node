@@ -1,5 +1,5 @@
 const TodoRepository = require('./../repositories/TodoRepository')
-
+const util = require('./../../util')
 const Todo = require('./../entities/Todo')
 
 class TodoController {
@@ -10,29 +10,13 @@ class TodoController {
   async index (request, response) {
     try {
       const todos = JSON.stringify(await this.todoRepository.findAll())
-      const { method } = request
-      const headers = { 'Access-Control-Allow-Origin': '*' }
-      //   ,
-      //   { key: 'Access-Control-Allow-Methods', vale: 'OPTIONS, POST, GET' },
-      //   { key: 'Access-Control-Allow-Headers', value: 'X-CSRF-token, X-Reques' },
-      //   { key: 'Access-Control-Allow-Credentials', value: true }
-      // ]
-
-      if (method === 'OPTIONS') {
-        response.writeHead(204, headers)
-        return response.end(todos)
-      }
-      if (['GET'].indexOf(method) > -1) {
-        response.writeHead(200, headers)
-        return response.end(todos)
-      }
-      response.writeHead(405, headers)
-      response.end(`${method} is not allowed for the request.`)
+      await util(request, 'GET', 200, response, todos)
       response.write(todos)
       return response.end()
     } catch (error) {
       console.log(error)
       response.writeHead(500, { 'Content-Type': 'application/json' })
+      await util(request, 'GET', 404, response, JSON.stringify({ message: 'Internal server error!' }))
       return response.end(JSON.stringify({ message: 'Internal server error!' }))
     }
   }
@@ -40,9 +24,10 @@ class TodoController {
   async get (request, response) {
     try {
       const todo = JSON.stringify(await this.todoRepository.findByID(request.itemId))
-
+      await util(request, 'GET', 200, response, todo)
       if (!todo) {
         response.writeHead(404, { 'Content-Type': 'application/json' })
+        await util(request, 'GET', 404, response, todo)
         return response.end(JSON.stringify({ message: 'Todo not found!' }))
       };
       response.write(todo)
@@ -50,6 +35,7 @@ class TodoController {
     } catch (error) {
       console.log(error)
       response.writeHead(500, { 'Content-Type': 'application/json' })
+      await util(request, 'GET', 200, response, JSON.stringify({ message: 'Internal server error!' }))
       return response.end(JSON.stringify({ message: 'Internal server error!' }))
     }
   }
@@ -59,12 +45,13 @@ class TodoController {
       // eslint-disable-next-line no-unreachable-loop
       for await (const data of request) {
         const { title, description, done = false } = JSON.parse(data)
-
+        const todo = new Todo({ title, description, done })
         if (!title || !description) {
           response.writeHead(400, { 'Content-Type': 'application/json' })
+          await util(request, 'POST', 400, response, todo)
           return response.end(JSON.stringify({ message: 'Invalid body!' }))
         }
-        const todo = new Todo({ title, description, done })
+        await util(request, 'POST', 201, response, todo)
         await this.todoRepository.create(todo)
         response.write(JSON.stringify(todo))
         return response.end()
@@ -77,9 +64,10 @@ class TodoController {
   async delete (request, response) {
     try {
       const todo = JSON.stringify(await this.todoRepository.delete(request.itemId))
-
+      await util(request, 'DELETE', 201, response, todo)
       if (!todo) {
         response.writeHead(404, { 'Content-Type': 'application/json' })
+        await util(request, 'DELETE', 404, response, todo)
         return response.end(JSON.stringify({ message: 'Todo not found!' }))
       };
       response.write(JSON.stringify(todo))
@@ -87,6 +75,8 @@ class TodoController {
     } catch (error) {
       console.log(error)
       response.writeHead(500, { 'Content-Type': 'application/json' })
+      const todo = JSON.stringify({ message: 'Internal server error!' })
+      await util(request, 'DELETE', 500, response, todo)
       return response.end(JSON.stringify({ message: 'Internal server error!' }))
     }
   }
@@ -94,11 +84,13 @@ class TodoController {
   async deleteAll (request, response) {
     try {
       const todos = JSON.stringify(await this.todoRepository.deleteAll())
+      await util(request, 'DELETE', 200, response, todos)
       response.write(todos)
       return response.end()
     } catch (error) {
       console.log(error)
       response.writeHead(500, { 'Content-Type': 'application/json' })
+      await util(request, 'DELETE', 500, response)
       return response.end(JSON.stringify({ message: 'Internal server error!' }))
     }
   }
