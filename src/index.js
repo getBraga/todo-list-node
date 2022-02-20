@@ -1,8 +1,16 @@
-const http = require('http')
+// const http = require('http')
+const express = require('express')
+const cors = require('cors')
 const { routes } = require('./../src/routes/Todo')
 
 const PORT = process.env.PORT || 4000
+const app = express()
 
+const corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200
+}
+app.use(cors(corsOptions))
 const handler = (request, response) => {
   const { url, method } = request
   let routeKey = `${method.toLowerCase()}:${url}`
@@ -19,7 +27,10 @@ const handler = (request, response) => {
 
   return chosen(request, response)
 }
-
-http.createServer(handler).listen((PORT), () => {
+app.use(handler)
+app.listen((PORT), (handler) => {
   console.log('service running at', PORT)
 })
+// http.createServer(handler).listen((PORT), () => {
+//   console.log('service running at', PORT)
+// })

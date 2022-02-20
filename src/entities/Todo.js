@@ -1,6 +1,6 @@
 class Todo {
   constructor ({ id, title, description, done, date }) {
-    this.id = Math.floor(Math.random() * 100) + Date.now()
+    this.id = (Math.floor(Math.random() * 100) + Date.now()).toString()
     this.title = title
     this.description = description
     this.done = done

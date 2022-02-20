@@ -21,7 +21,7 @@ class TodoHepository {
     try {
       const response = await JSON.parse(await readFile(this.file))
       if (!id) return null
-      const item = response.find(data => data.id === +id)
+      const item = response.find(data => data.id === id)
       return item
     } catch (error) {
       console.error('Deu ruim!!', error)
@@ -50,7 +50,7 @@ class TodoHepository {
     try {
       const response = JSON.parse(await readFile(this.file))
       if (!id) return null
-      const item = response.find(data => data.id === +id)
+      const item = response.find(data => data.id === id)
       if (item) {
         response.splice(response.indexOf(item), 1)
       }
