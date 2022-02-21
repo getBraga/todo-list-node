@@ -10,11 +10,12 @@ const routes = {
 
   default: (request, response) => {
     // response.writeHead(404)
+    response.statusMessage = 'Not found';
     response.write(JSON.stringify({
       statusCode: 404,
       message: 'Endpoint not found!'
     }))
-    response.writeHead(404)
+//     response.writeHead(404)
     return response.end()
   }
 }
