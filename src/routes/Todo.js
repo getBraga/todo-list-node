@@ -1,5 +1,4 @@
 const TodoController = require('./../controllers/TodoController')
-const corsConfig = require('./../../util')
 const todoController = new TodoController('todo')
 const routes = {
   'get:/todo': todoController.get.bind(todoController),
@@ -10,12 +9,12 @@ const routes = {
   'delete:/todos': todoController.deleteAll.bind(todoController),
 
   default: (request, response) => {
-    response.writeHead(404, corsConfig())
+    // response.writeHead(404)
     response.write(JSON.stringify({
       statusCode: 404,
       message: 'Endpoint not found!'
     }))
-
+    response.writeHead(404)
     return response.end()
   }
 }
