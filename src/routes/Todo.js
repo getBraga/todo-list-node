@@ -13,7 +13,7 @@ const routes = {
   
  
    
-    response.write(JSON.stringify({
+    response.write(response.writeHead(404), JSON.stringify({
       statusCode: 404,
       message: 'Endpoint not found!'
     }))
