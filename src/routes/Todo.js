@@ -9,8 +9,7 @@ const routes = {
   'delete:/todos': todoController.deleteAll.bind(todoController),
 
   default: (request, response) => {
-      response.setHeader('Content-Type', 'text/html');
-  response.setHeader('X-Foo', 'bar');
+   
   response.writeHead(404, { 'Access-Control-Allow-Origin': '*' });
  
    
