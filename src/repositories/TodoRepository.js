@@ -28,6 +28,15 @@ class TodoHepository {
     }
   }
 
+  async update (item) {
+    const response = await this.findAll()
+    if (!item) return null
+    const index = response.findIndex((i) => i.id === item.id)
+    response[index] = { ...item }
+    await writeFile(this.file, JSON.stringify(response))
+    return item
+  }
+
   async create (data) {
     const response = await JSON.parse(await readFile(this.file))
     response.push(data)

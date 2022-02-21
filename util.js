@@ -1,13 +1,12 @@
-function corsConfig ({ method }, nomeMetodo, valorRequicao, response, retornoBody) {
+function corsConfig () {
   const headers = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'DELETE',
+    'Access-Control-Allow-Methods': 'DELETE, GET, POST, PUT, OPTIONS',
+    'Content-Type': 'application/json',
     'Access-Control-Allow-Headers': 'X-CSRF-token, X-Reque, Origin, Content-Type, Accept',
     'Access-Control-Allow-Credentials': true
   }
-  if ([nomeMetodo].indexOf(method) > -1) {
-    response.writeHead(valorRequicao, headers)
-  }
+  return headers
 }
 
 module.exports = corsConfig
