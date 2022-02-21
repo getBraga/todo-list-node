@@ -18,7 +18,7 @@ const routes = {
       message: 'Endpoint not found!'
     }))
 //     response.writeHead(404)
-    response.writeHead(404, { 'Access-Control-Allow-Origin': '*' });
+//     response.writeHead(404, { 'Access-Control-Allow-Origin': '*' });
     return response.end()
   }
 }
