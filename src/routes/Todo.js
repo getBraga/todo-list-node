@@ -11,8 +11,8 @@ const routes = {
   default: (request, response) => {
       response.setHeader('Content-Type', 'text/html');
   response.setHeader('X-Foo', 'bar');
-  response.writeHead(404, { 'Content-Type': 'text/plain' });
-  response.end('ok');
+  response.writeHead(404, { 'Access-Control-Allow-Origin': '*' });
+ 
    
     response.write(JSON.stringify({
       statusCode: 404,
