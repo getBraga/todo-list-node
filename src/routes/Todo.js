@@ -11,14 +11,11 @@ const routes = {
   default: (request, response) => {
    
   
- 
-   
-    response.write(response.writeHead(404), JSON.stringify({
+    response.write(JSON.stringify({
       statusCode: 404,
       message: 'Endpoint not found!'
     }))
-//     response.writeHead(404)
-//     response.writeHead(404, { 'Access-Control-Allow-Origin': '*' });
+    response.writeHead(404)
     return response.end()
   }
 }
