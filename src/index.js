@@ -1,16 +1,9 @@
-// const http = require('http')
-const express = require('express')
-const cors = require('cors')
+const http = require('http')
+const corsConfig = require('./../util')
 const { routes } = require('./../src/routes/Todo')
 
 const PORT = process.env.PORT || 4000
-const app = express()
 
-const corsOptions = {
-  origin: '*',
-  optionsSuccessStatus: 200
-}
-app.use(cors(corsOptions))
 const handler = (request, response) => {
   const { url, method } = request
   let routeKey = `${method.toLowerCase()}:${url}`
@@ -23,14 +16,9 @@ const handler = (request, response) => {
   const chosen = routes[routeKey] || routes.default
 
   request.itemId = id
-  response.writeHead(200, { 'Content-Type': 'application/json' })
-
+  response.writeHead(200, corsConfig())
   return chosen(request, response)
 }
-app.use(handler)
-app.listen((PORT), (handler) => {
+http.createServer(handler).listen((PORT), () => {
   console.log('service running at', PORT)
 })
-// http.createServer(handler).listen((PORT), () => {
-//   console.log('service running at', PORT)
-// })
