@@ -10,7 +10,7 @@ const routes = {
 
   default: (request, response) => {
    
-  response.writeHead(404, { 'Access-Control-Allow-Origin': '*' });
+  
  
    
     response.write(JSON.stringify({
@@ -18,6 +18,7 @@ const routes = {
       message: 'Endpoint not found!'
     }))
 //     response.writeHead(404)
+    response.writeHead(404, { 'Access-Control-Allow-Origin': '*' });
     return response.end()
   }
 }
