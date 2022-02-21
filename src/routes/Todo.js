@@ -9,8 +9,9 @@ const routes = {
   'delete:/todos': todoController.deleteAll.bind(todoController),
 
   default: (request, response) => {
-    // response.writeHead(404)
-    response.statusMessage = 'Not found';
+     response.statusMessage = 'Not found';
+    response.writeHead(404, response.statusMessage)
+   
     response.write(JSON.stringify({
       statusCode: 404,
       message: 'Endpoint not found!'
